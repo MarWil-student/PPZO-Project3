@@ -50,7 +50,18 @@ namespace LibrarySystem
     //DZIEDZICZENIE: Klasa Magazine dziedziczy po LibraryItem
     public class Magazine : LibraryItem
     {
+        public int IsNumber { get; private set; }
 
+        public Magazine(string title, int isNumber) : base(title)
+        {
+            IsNumber = isNumber;
+        }
+
+        public override void DisplayInfo()
+        {
+            string status = IsBorrowed ? "Wypożyczone" : "Dostępne";
+            Console.WriteLine($"[Czasopismo] Tytuł: '{Title}', Numer: {IsNumber} - Status: {status}");
+        }
     }
 
     // Klasa reprezentująca czytelnika
