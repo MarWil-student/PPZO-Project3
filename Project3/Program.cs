@@ -161,7 +161,43 @@ namespace LibrarySystem
     {
         static void Main(string[] args)
         {
+            // Inicjalizacja obiektów
+            LibraryCatalog catalog = new LibraryCatalog();
+            BorrowingService borrowingService = new BorrowingService();
+            User user1 = new User("Jan Kowalski");
 
+            // Tworzenie zasobów
+            Book book1 = new Book("Wladca Pierscieni", "J.R.R. Tolkien");
+            Book book2 = new Book("Wiedzmin", "Andrzej Sapkowski");
+            Book book3 = new Book("Gra o Tron", "George R. R. Martin");
+            Magazine mag1 = new Magazine("Hikari", 102);
+
+            // Dodawanie do katalogu
+            catalog.AddToCatalog(book1);
+            catalog.AddToCatalog(book2);
+            catalog.AddToCatalog(book3);
+            catalog.AddToCatalog(mag1);
+
+            catalog.ShowAllItems();
+
+            // Wypożyczanie
+            var itemToBorrow = catalog.FindItemByTitle("Wladca Pierscieni");
+            borrowingService.BorrowItem(user1, itemToBorrow);
+
+            // Próba wypożyczenia już wypożyczonego
+            borrowingService.BorrowItem(user1, itemToBorrow);
+
+            catalog.ShowAllItems();
+
+            // Zwrot
+            borrowingService.ReturnItem(user1, itemToBorrow);
+
+            // Proba zwrotu bez wypożyczenia
+            var itemToBorrow2 = catalog.FindItemByTitle("Gra o Tron");
+            borrowingService.ReturnItem(user1, itemToBorrow2);
+
+            catalog.ShowAllItems();
         }
-    }
+
+    }   
 }
