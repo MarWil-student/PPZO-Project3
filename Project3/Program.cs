@@ -122,7 +122,6 @@ namespace LibrarySystem
     // Klasa odpowiedzialna WYŁĄCZNIE za logikę wypożyczania i zwrotów (Serwis)
     public class BorrowingService
     {
-            {
         public void BorrowItem(User user, LibraryItem item)
         {
             if (item == null)
