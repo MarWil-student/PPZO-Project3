@@ -42,8 +42,8 @@ namespace LibrarySystem
         // POLIMORFIZM: Przesłonięcie metody z klasy bazowej
         public override void DisplayInfo()
         {
-            string status = IsBorrowed ? "Wypożyczona" : "Dostępna";
-            Console.WriteLine($"[Książka] Tytuł: '{Title}', Autor: {Author} - Status: {status}");
+            string status = IsBorrowed ? "Wypozyczona" : "Dostepna";
+            Console.WriteLine($"[Książka] Tytul: '{Title}', Autor: {Author} - Status: {status}");
         }
     }
 
@@ -59,8 +59,8 @@ namespace LibrarySystem
 
         public override void DisplayInfo()
         {
-            string status = IsBorrowed ? "Wypożyczone" : "Dostępne";
-            Console.WriteLine($"[Czasopismo] Tytuł: '{Title}', Numer: {IsNumber} - Status: {status}");
+            string status = IsBorrowed ? "Wypozyczone" : "Dostepne";
+            Console.WriteLine($"[Czasopismo] Tytul: '{Title}', Numer: {IsNumber} - Status: {status}");
         }
     }
 
@@ -96,13 +96,65 @@ namespace LibrarySystem
     // Klasa odpowiedzialna WYŁĄCZNIE za przechowywanie zbiorów (Katalog)
     public class LibraryCatalog
     {
+        private List<LibraryItem> _items = new List<LibraryItem>();
 
+        public void AddToCatalog(LibraryItem item)
+        {
+            _items.Add(item);
+        }
+
+        public LibraryItem FindItemByTitle(string title)
+        {
+            return _items.FirstOrDefault(i => i.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public void ShowAllItems()
+        {
+            Console.WriteLine("\n--- Katalog Biblioteki ---");
+            foreach (var item in _items)
+            {
+                item.DisplayInfo(); // Wywołanie polimorficzne
+            }
+            Console.WriteLine("--------------------------\n");
+        }
     }
 
     // Klasa odpowiedzialna WYŁĄCZNIE za logikę wypożyczania i zwrotów (Serwis)
     public class BorrowingService
     {
+            {
+        public void BorrowItem(User user, LibraryItem item)
+        {
+            if (item == null)
+            {
+                Console.WriteLine("Nie znaleziono takiego przedmiotu.");
+                return;
+            }
 
+            if (item.IsBorrowed)
+            {
+                Console.WriteLine($"Przepraszamy, '{item.Title}' jest już wypozyczone.");
+                return;
+            }
+
+            item.SetBorrowedState(true);
+            user.AddItem(item);
+            Console.WriteLine($"Uzytkownik {user.Name} pomyslnie wypozyczyl '{item.Title}'.");
+        }
+
+        public void ReturnItem(User user, LibraryItem item)
+        {
+            if (item != null && user.BorrowedItems.Contains(item))
+            {
+                item.SetBorrowedState(false);
+                user.RemoveItem(item);
+                Console.WriteLine($"Uzytkownik {user.Name} zwrocil '{item.Title}'.");
+            }
+            else
+            {
+                Console.WriteLine($"Uzytkownik {user.Name} nie posiada wypozyczonego przedmiotu '{item?.Title}'.");
+            }
+        }
     }
 
     // Punkt wejścia aplikacji
