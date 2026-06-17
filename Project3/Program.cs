@@ -67,6 +67,31 @@ namespace LibrarySystem
     // Klasa reprezentująca czytelnika
     public class User
     {
+        public Guid UserId { get; private set; }
+        public string Name { get; private set; }
+
+        // Kompozycja/Agregacja: Użytkownik posiada listę wypożyczonych przedmiotów
+        private List<LibraryItem> _borrowedItems;
+
+        public IReadOnlyList<LibraryItem> BorrowedItems => _borrowedItems.AsReadOnly();
+
+        public User(string name)
+        {
+            UserId = Guid.NewGuid();
+            Name = name;
+            _borrowedItems = new List<LibraryItem>();
+        }
+
+        public void AddItem(LibraryItem item)
+        {
+            _borrowedItems.Add(item);
+        }
+
+        public void RemoveItem(LibraryItem item)
+        {
+            _borrowedItems.Remove(item);
+        }
+
 
     }
 
