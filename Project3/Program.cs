@@ -96,7 +96,27 @@ namespace LibrarySystem
     // Klasa odpowiedzialna WYŁĄCZNIE za przechowywanie zbiorów (Katalog)
     public class LibraryCatalog
     {
+        private List<LibraryItem> _items = new List<LibraryItem>();
 
+        public void AddToCatalog(LibraryItem item)
+        {
+            _items.Add(item);
+        }
+
+        public LibraryItem FindItemByTitle(string title)
+        {
+            return _items.FirstOrDefault(i => i.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public void ShowAllItems()
+        {
+            Console.WriteLine("\n--- Katalog Biblioteki ---");
+            foreach (var item in _items)
+            {
+                item.DisplayInfo(); // Wywołanie polimorficzne
+            }
+            Console.WriteLine("--------------------------\n");
+        }
     }
 
     // Klasa odpowiedzialna WYŁĄCZNIE za logikę wypożyczania i zwrotów (Serwis)
