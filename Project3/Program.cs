@@ -32,10 +32,22 @@ namespace LibrarySystem
     //DZIEDZICZENIE: Klasa Book dziedziczy po LibraryItem
     public class Book : LibraryItem
     {
+        public string Author { get; private set; }
 
+        public Book(string title, string author) : base(title)
+        {
+            Author = author;
+        }
+
+        // POLIMORFIZM: Przesłonięcie metody z klasy bazowej
+        public override void DisplayInfo()
+        {
+            string status = IsBorrowed ? "Wypożyczona" : "Dostępna";
+            Console.WriteLine($"[Książka] Tytuł: '{Title}', Autor: {Author} - Status: {status}");
+        }
     }
 
-    // Klasa reprezentująca czasopismo (kolejny przykład dziedziczenia i polimorfizmu)
+    //DZIEDZICZENIE: Klasa Magazine dziedziczy po LibraryItem
     public class Magazine : LibraryItem
     {
 
