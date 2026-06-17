@@ -91,8 +91,6 @@ namespace LibrarySystem
         {
             _borrowedItems.Remove(item);
         }
-
-
     }
 
     // Klasa odpowiedzialna WYŁĄCZNIE za przechowywanie zbiorów (Katalog)
