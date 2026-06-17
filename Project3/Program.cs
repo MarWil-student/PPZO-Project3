@@ -67,7 +67,7 @@ namespace LibrarySystem
     // Klasa reprezentująca czytelnika
     public class User
     {
-
+        .
     }
 
     // Klasa odpowiedzialna WYŁĄCZNIE za przechowywanie zbiorów (Katalog)
